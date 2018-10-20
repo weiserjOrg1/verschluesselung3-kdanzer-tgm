@@ -78,9 +78,7 @@ public class Controller implements ActionListener, ChangeListener, ComponentList
 	public void componentResized(ComponentEvent e) { //Repaint Frame so the Components in the Pane updates
 		try {
 			this.v1.sizeAll();
-		} catch (Exception exc) {
-			System.out.println(exc);
-		}
+		} catch (Exception exc) {}
 	}
 	
 	@Override public void componentMoved(ComponentEvent e) {}
