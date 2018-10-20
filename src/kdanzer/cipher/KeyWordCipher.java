@@ -11,10 +11,11 @@ public class KeyWordCipher extends MonoAlphabeticCipher{
 		}
 		
 		public String createSecretAlphabet(String key) {
+			key = key.toLowerCase();
 			String hilfe = "";
 			for (int i = 0; i < key.length(); i ++) {
 				String str = key.charAt(i) + "";
-				if (str.matches("[a-zA-ZöäüÖÄÜß")) {
+				if (str.matches("[a-zäöüß}]")) {
 					hilfe += str;
 				}
 			}
@@ -28,13 +29,13 @@ public class KeyWordCipher extends MonoAlphabeticCipher{
 				}
 			}
 			key = hilfe;
-			for (int i = 0; i < key.length(); i ++) {
+			for (int i = 0; i < alphabet.length(); i ++) {
 				if (key.contains("" + alphabet.charAt(i))) {
 				} else {
 					key += alphabet.charAt(i);
 				}
 			}
-			return alphabet;
+			return key;
 		}
 
 		public boolean setSecretAlphabet() {

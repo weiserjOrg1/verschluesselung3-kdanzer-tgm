@@ -50,8 +50,7 @@ public class View extends JFrame {
 	private JPanel panel1, panel2, panel3; //to make the Layout
 	private JLabel label1, label2; //to be able to name some sections on the Panel;
 	private Border border1, border2;
-	private JSpinner shiftValueSpinner, TransValueSpinner; //Where you rotate the secrete alphabet of shiftCipher
-	private int activeCipher;
+	private JSpinner shiftValueSpinner, transValueSpinner; //Where you rotate the secrete alphabet of shiftCipher
 	
 	//Konstruktor
 	public View(Model m, Controller c) {
@@ -149,7 +148,7 @@ public class View extends JFrame {
 		this.panel3.setBackground(new Color(250, 255, 255));
 		this.add(panel3);
 		
-		this.comboBox = new JComboBox<>(new String[] {"Substitution", "Shift"});
+		this.comboBox = new JComboBox<>(new String[] {"Substitution", "Shift", "Transposition", "KeyWord"});
 		this.comboBox.setFocusable(false);
 		this.comboBox.addActionListener(this.c1);
 		this.panel3.add(this.comboBox);
@@ -221,10 +220,10 @@ public class View extends JFrame {
 		this.label2 = new JLabel("Transpositions Wert");
 		this.panel3.add(this.label2);
 		
-		this.TransValueSpinner = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-		this.TransValueSpinner.setEditor(new JSpinner.DefaultEditor(this.TransValueSpinner));
-		this.TransValueSpinner.addChangeListener(this.c1);
-		this.panel3.add(this.TransValueSpinner);
+		this.transValueSpinner = new JSpinner(new SpinnerNumberModel(2, 2, Integer.MAX_VALUE, 1));
+		this.transValueSpinner.setEditor(new JSpinner.DefaultEditor(this.transValueSpinner));
+		this.transValueSpinner.addChangeListener(this.c1);
+		this.panel3.add(this.transValueSpinner);
 		
 		this.keyWord = new JTextArea();
 		this.keyWord.setLineWrap(true);
@@ -288,7 +287,7 @@ public class View extends JFrame {
 		this.alphabetButton.setBounds(165, 10, 100, 35);
 		
 		this.label2.setBounds(10, 94, 130, 16);
-		this.TransValueSpinner.setBounds(10, 110, 100, 20);
+		this.transValueSpinner.setBounds(10, 110, 100, 20);
 		this.keyWord.setBounds(270, this.panel3.getHeight()/5*2 + 20, this.panel3.getWidth()/15*14-260, this.panel3.getHeight()/5*2);
 		this.keyButton.setBounds(165, this.panel3.getHeight()/5*2 + 20, 100, 35);
 	}
@@ -310,6 +309,10 @@ public class View extends JFrame {
 	public String getSecretAlphabet() {
 		return this.secretAlphabet.getText();
 	}
+	
+	public String getKeyWord() {
+		return this.keyWord.getText();
+	}
 
 	
 	public int getComboBoxIndex() {
@@ -319,24 +322,50 @@ public class View extends JFrame {
 	public int getSpinnerValue() {
 		return (int) this.shiftValueSpinner.getValue();
 	}
-	
-	public int getActiveCipher() {
-		return this.activeCipher;
+
+	public int getSpinner2Value() {
+		return (int) this.transValueSpinner.getValue();
 	}
 	
 	public void activateShift() {
 		this.shiftValueSpinner.setEnabled(true);
 		this.secretAlphabet.setEnabled(false);
 		this.alphabetButton.setEnabled(false);
-		this.activeCipher = View.SHIFT;
+		this.keyButton.setEnabled(false);
+		this.keyButton.setEnabled(false);
+		this.keyWord.setEnabled(false);
+		this.transValueSpinner.setEnabled(false);
+		this.m1.monoC = this.m1.shiftC;
 	}
 	
 	public void activateSubstitution() {
 		this.shiftValueSpinner.setEnabled(false);
 		this.secretAlphabet.setEnabled(true);
 		this.alphabetButton.setEnabled(true);
-		this.activeCipher = View.SUBSTITUTION;
 		if (secretAlphabet.getText().length() < 30) this.alphabetButton.setEnabled(false);
+		this.keyButton.setEnabled(false);
+		this.keyWord.setEnabled(false);
+		this.transValueSpinner.setEnabled(false);
+		this.m1.monoC = this.m1.subC;
+	}
+	
+	public void activateTranspos() {
+		this.shiftValueSpinner.setEnabled(false);
+		this.secretAlphabet.setEnabled(false);
+		this.alphabetButton.setEnabled(false);
+		this.keyButton.setEnabled(false);
+		this.keyWord.setEnabled(false);
+		this.transValueSpinner.setEnabled(true);
+	}
+	
+	public void activateKeyWord() {
+		this.shiftValueSpinner.setEnabled(false);
+		this.secretAlphabet.setEnabled(false);
+		this.alphabetButton.setEnabled(false);
+		this.keyButton.setEnabled(true);
+		this.keyWord.setEnabled(true);
+		this.transValueSpinner.setEnabled(false);
+		this.m1.monoC = this.m1.keyC;
 	}
 	
 	
@@ -364,9 +393,17 @@ public class View extends JFrame {
 		if (this.alphabetButton == o) return true;
 		return false;
 	}
+	public boolean isSetKeyButton(Object o) {
+		if (this.keyButton == o) return true;
+		return false;
+	}
 	
 	public boolean isSpinner(Object o) {
 		if (this.shiftValueSpinner == o) return true;
+		return false;
+	}
+	public boolean isSpinner2(Object o) {
+		if (this.transValueSpinner == o) return true;
 		return false;
 	}
 
