@@ -41,16 +41,16 @@ public class View extends JFrame {
 	@SuppressWarnings("unused")
 	private Model m1;
 	
-	private JButton verschGo, entschGo, copyButton, alphabetButton; //start the Cipher
+	private JButton verschGo, entschGo, copyButton, alphabetButton, keyButton; //start the Cipher
 	private JComboBox<String> comboBox; //Combobox to choose the Cipher
-	private JTextArea text, ausgabe, secretAlphabet; 	/*text field where one enter the clear text or the secret text , 
+	private JTextArea text, ausgabe, secretAlphabet, keyWord; 	/*text field where one enter the clear text or the secret text , 
 														Returns of the clear text or the secret text
 														secretAlphabet where u enter the secrete Alphabet*/
 	private JScrollPane scrollPane1, scrollPane2;
 	private JPanel panel1, panel2, panel3; //to make the Layout
-	private JLabel label1; //to be able to name some sections on the Panel;
+	private JLabel label1, label2; //to be able to name some sections on the Panel;
 	private Border border1, border2;
-	private JSpinner shiftValueSpinner; //Where you rotate the secrete alphabet of shiftCipher
+	private JSpinner shiftValueSpinner, TransValueSpinner; //Where you rotate the secrete alphabet of shiftCipher
 	private int activeCipher;
 	
 	//Konstruktor
@@ -216,6 +216,42 @@ public class View extends JFrame {
 		});
 		this.panel3.add(this.alphabetButton);
 		
+		
+		
+		this.label2 = new JLabel("Transpositions Wert");
+		this.panel3.add(this.label2);
+		
+		this.TransValueSpinner = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
+		this.TransValueSpinner.setEditor(new JSpinner.DefaultEditor(this.TransValueSpinner));
+		this.TransValueSpinner.addChangeListener(this.c1);
+		this.panel3.add(this.TransValueSpinner);
+		
+		this.keyWord = new JTextArea();
+		this.keyWord.setLineWrap(true);
+		this.keyWord.setWrapStyleWord(true);
+		this.keyWord.setBackground(new Color(231, 208, 234));
+		this.keyWord.setFont(new Font("", Font.PLAIN, 15));
+		this.keyWord.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+		this.panel3.add(this.keyWord);
+		
+		
+		this.keyButton = new JButton("Set Keyword");
+		this.keyButton.setFocusPainted(false);
+		this.keyButton.setBorder(new LineBorder(Color.GRAY));
+		this.keyButton.addActionListener(this.c1);
+		this.keyButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent source) {
+				if (keyButton.isEnabled())
+					keyButton.setBorder(BorderFactory.createEtchedBorder(0, Color.BLACK, Color.WHITE));
+			}
+			@Override
+			public void mouseExited(MouseEvent source) {
+				keyButton.setBorder(new LineBorder(Color.GRAY));
+			}
+		});
+		this.panel3.add(this.keyButton);
+		
 	}
 	
 	public void sizeAll() {
@@ -250,6 +286,11 @@ public class View extends JFrame {
 		this.shiftValueSpinner.setBounds(10, 70, 60, 20);
 		this.secretAlphabet.setBounds(270, 10, this.panel3.getWidth()/15*14-260, this.panel3.getHeight()/5*2);
 		this.alphabetButton.setBounds(165, 10, 100, 35);
+		
+		this.label2.setBounds(10, 94, 130, 16);
+		this.TransValueSpinner.setBounds(10, 110, 100, 20);
+		this.keyWord.setBounds(270, this.panel3.getHeight()/5*2 + 20, this.panel3.getWidth()/15*14-260, this.panel3.getHeight()/5*2);
+		this.keyButton.setBounds(165, this.panel3.getHeight()/5*2 + 20, 100, 35);
 	}
 	
 	//Methoden

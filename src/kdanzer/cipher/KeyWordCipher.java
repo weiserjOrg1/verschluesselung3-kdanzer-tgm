@@ -10,7 +10,7 @@ public class KeyWordCipher extends MonoAlphabeticCipher{
 			this.createSecretAlphabet(key);
 		}
 		
-		public void createSecretAlphabet(String key) {
+		public String createSecretAlphabet(String key) {
 			String hilfe = "";
 			for (int i = 0; i < key.length(); i ++) {
 				String str = key.charAt(i) + "";
@@ -34,6 +34,7 @@ public class KeyWordCipher extends MonoAlphabeticCipher{
 					key += alphabet.charAt(i);
 				}
 			}
+			return alphabet;
 		}
 
 		public boolean setSecretAlphabet() {
